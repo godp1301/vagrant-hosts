@@ -81,6 +81,14 @@ class Provisioner < Vagrant.plugin('2', :provisioner)
             hosts << [ipaddr, [name]]
           end
         end
+
+        env_machine = env.machine(name, :openstack)
+        os_network_settings = env_machine.ssh_info
+
+        unless os_network_settings.nil?
+          host = os_network_settings[:host]
+          hosts << [host, [name]] if not nil?
+        end
       end
 
       hosts
